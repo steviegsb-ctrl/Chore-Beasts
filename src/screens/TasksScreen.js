@@ -1,40 +1,35 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Picker } from "react-native";
 
-const initial = [
-  { id: 1, room: "Kitchen", title: "Wash dishes", done: false },
-  { id: 2, room: "Kitchen", title: "Take out bins", done: false },
-  { id: 3, room: "Living Room", title: "Vacuum floor", done: true },
-];
+/**
+ * Props:
+ * - players: [{id, name, xp}]
+ * - addXp: (playerId, amount) => void
+ * - xpPerTask: number
+ */
+export default function TasksScreen({ players = [], addXp, xpPerTask = 5 }) {
+  // simple example list
+  const [tasks, setTasks] = useState([
+    { id: 1, room: "Kitchen", title: "Wash dishes", done: false, assignedTo: "stevie" },
+    { id: 2, room: "Kitchen", title: "Take out bins", done: false, assignedTo: "leo" },
+    { id: 3, room: "Living Room", title: "Vacuum floor", done: true, assignedTo: "parker" },
+  ]);
 
-export default function TasksScreen() {
-  const [tasks, setTasks] = useState(initial);
-
-  const toggle = (id) =>
+  const toggle = (task) => {
     setTasks((list) =>
-      list.map((t) => (t.id === id ? { ...t, done: !t.done } : t))
+      list.map((t) =>
+        t.id === task.id ? { ...t, done: !t.done } : t
+      )
     );
 
-  return (
-    <ScrollView className="flex-1 bg-gradient-to-br from-teal-200 via-sky-100 to-indigo-200 p-6">
-      <Text className="text-3xl font-extrabold text-teal-800 mb-4">✅ Tasks</Text>
+    // XP logic: add on complete, subtract if unchecking
+    if (!task.done) {
+      addXp?.(task.assignedTo, xpPerTask);
+    } else {
+      addXp?.(task.assignedTo, -xpPerTask);
+    }
+  };
 
-      {tasks.map((t) => (
-        <View key={t.id} className="bg-white p-4 rounded-2xl shadow mb-3">
-          <Text className="text-xs text-gray-500">{t.room}</Text>
-          <Text className="text-lg font-bold mb-2">{t.title}</Text>
-          <TouchableOpacity
-            onPress={() => toggle(t.id)}
-            className={`px-4 py-2 rounded-xl ${
-              t.done ? "bg-green-500" : "bg-gray-800"
-            }`}
-          >
-            <Text className="text-white">
-              {t.done ? "Marked Done ✅" : "Mark Done"}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      ))}
-    </ScrollView>
-  );
-}
+  const reassign = (taskId, newAssignee) => {
+    setTasks((list) =>
+      list.map((t) => (t.id === taskId ?
