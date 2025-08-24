@@ -11,9 +11,7 @@ export default {
       resizeMode: "contain",
       backgroundColor: "#ffffff"
     },
-    assetBundlePatterns: [
-      "**/*"
-    ],
+    assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.steviegsb.chorebeasts"
@@ -31,7 +29,7 @@ export default {
     },
     extra: {
       eas: {
-        projectId: "your-expo-project-id"
+        projectId: "fdc24d96-fd42-4a2f-9648-1490d3f1d92f"
       }
     }
   }
