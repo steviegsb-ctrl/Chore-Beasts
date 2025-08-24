@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Chore Beasts",
+    "slug": "chore-beasts",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["android"],
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.chorebeasts.app",
+      "versionCode": 1
+    }
+  }
+}
