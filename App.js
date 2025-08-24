@@ -21,11 +21,11 @@
       "bundleIdentifier": "com.stevie.chorebeasts"
     },
     "android": {
+      "package": "com.stevie.chorebeasts",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.stevie.chorebeasts"
+      }
     },
     "web": {
       "favicon": "./assets/icon.png"
