@@ -8,12 +8,28 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0078C8"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
+      "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
-    "platforms": ["android"]
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.steviegsb.chorebeasts"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.steviegsb.chorebeasts",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fdc24d96-fd42-4a2f-9648-1490d3f1d92f"
+      }
+    }
   }
 }
