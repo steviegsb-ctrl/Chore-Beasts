@@ -1,11 +1,10 @@
-import { StatusBar } from 'react-native';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <Text>Chore Beasts</Text>
-      <StatusBar style="auto" />
+      <StatusBar barStyle="dark-content" />
     </View>
   );
 }
