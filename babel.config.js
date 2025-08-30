@@ -1,10 +1,11 @@
+// babel.config.js
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ["babel-preset-expo"],
+    presets: ['babel-preset-expo'],
+    // IMPORTANT: plugin must be last
     plugins: [
-      "nativewind/babel",
-      "react-native-reanimated/plugin" // must be last
+      'react-native-worklets/plugin', // replaces 'react-native-reanimated/plugin'
     ],
   };
 };
