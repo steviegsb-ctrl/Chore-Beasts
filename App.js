@@ -1,9 +1,10 @@
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StatusBar, StyleSheet, Text, View } from "react-native";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Chore Beasts</Text>
+      <Text style={styles.title}>Chore Beasts</Text>
       <StatusBar barStyle="dark-content" />
     </View>
   );
@@ -12,7 +13,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });
