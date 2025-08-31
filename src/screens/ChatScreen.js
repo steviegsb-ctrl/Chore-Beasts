@@ -1,32 +1,46 @@
-import { View, Text, TextInput, ScrollView } from "react-native";
+import { useState } from "react";
+import { View, Text, FlatList, Pressable } from "react-native";
 
-export default function ChatScreen() {
+export default function ChoresScreen() {
+  const [chores, setChores] = useState([
+    { id: "1", title: "Vacuum", room: "Living room", xp: 10, done: false },
+    { id: "2", title: "Dishes", room: "Kitchen", xp: 20, done: false },
+  ]);
+
+  function complete(id) {
+    setChores((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, done: true } : c))
+    );
+  }
+
   return (
-    <View className="flex-1 bg-gradient-to-br from-purple-200 via-pink-100 to-blue-200 p-6">
-      <Text className="text-3xl font-extrabold text-purple-800 mb-4">
-        💬 House Chat
-      </Text>
+    <View style={{ flex: 1, padding: 16 }}>
+      <Text style={{ fontSize: 22, fontWeight: "700" }}>Chores</Text>
 
-      {/* Messages */}
-      <ScrollView className="flex-1 bg-white p-4 rounded-2xl shadow mb-4">
-        <Text>
-          <Text className="font-bold text-pink-500">Stevie:</Text> Don’t forget
-          bins night! 🗑️
-        </Text>
-        <Text>
-          <Text className="font-bold text-blue-500">Leo:</Text> Can I swap dishes
-          for vacuuming?
-        </Text>
-        <Text>
-          <Text className="font-bold text-green-500">Parker 🐶:</Text> *chewed mop
-          again*
-        </Text>
-      </ScrollView>
-
-      {/* Input */}
-      <TextInput
-        placeholder="Type a message..."
-        className="bg-white rounded-xl p-3 border border-gray-300"
+      <FlatList
+        data={chores}
+        keyExtractor={(c) => c.id}
+        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+        renderItem={({ item }) => (
+          <View style={{ padding: 12, borderWidth: 1, borderRadius: 8 }}>
+            <Text style={{ fontWeight: "600" }}>
+              {item.title} • {item.room}
+            </Text>
+            <Text style={{ marginVertical: 4 }}>{item.xp} XP</Text>
+            <Pressable
+              onPress={() => complete(item.id)}
+              disabled={item.done}
+              style={{
+                paddingVertical: 8,
+                alignItems: "center",
+                backgroundColor: item.done ? "#ddd" : "#eee",
+                borderRadius: 6,
+              }}
+            >
+              <Text>{item.done ? "Completed" : "Complete"}</Text>
+            </Pressable>
+          </View>
+        )}
       />
     </View>
   );
