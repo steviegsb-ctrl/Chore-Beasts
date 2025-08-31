@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button } from 'react-native';
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import HomeScreen from "./HomeScreen";
+import ChoresScreen from "./ChoresScreen";
+import EditRoomsScreen from "./EditRoomsScreen";
+import PrizesScreen from "./PrizesScreen";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Chore Beasts</Text>
-      <Text>Button pressed: {count} times</Text>
-      <View style={{ height: 12 }} />
-      <Button title="Press me" onPress={() => setCount(c => c + 1)} />
-      <StatusBar barStyle="dark-content" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Chores" component={ChoresScreen} />
+        <Tab.Screen name="Edit Rooms" component={EditRoomsScreen} />
+        <Tab.Screen name="Prizes" component={PrizesScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' },
-  title: { fontSize: 28, fontWeight: '600', marginBottom: 8 },
-});
