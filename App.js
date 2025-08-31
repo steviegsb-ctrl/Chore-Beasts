@@ -1,4 +1,7 @@
+// Must be the very first imports
 import "react-native-gesture-handler";
+import "react-native-url-polyfill/auto";
+
 import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";

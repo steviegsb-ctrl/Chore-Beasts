@@ -11,6 +11,10 @@
     "doctor": "expo doctor"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-navigation/bottom-tabs": "^6.5.20",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/native-stack": "^6.11.0",
     "expo": "^53.0.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -19,9 +23,7 @@
     "react-native-reanimated": "~3.16.1",
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "3.34.0",
-    "@react-navigation/native": "^6.1.18",
-    "@react-navigation/bottom-tabs": "^6.5.20",
-    "@react-navigation/native-stack": "^6.11.0",
+    "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.1.0"
   },
   "devDependencies": {
