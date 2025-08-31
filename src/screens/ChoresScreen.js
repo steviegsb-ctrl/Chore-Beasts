@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { View, Text, FlatList, TextInput, Button, Picker } from "react-native";
-
-// Note: If your RN version doesn't include Picker, just use TextInput for room too.
+import { View, Text, FlatList, TextInput, Button } from "react-native";
 
 export default function ChoresScreen({ rooms, chores, onComplete, onAdd, onReset }) {
   const [title, setTitle] = useState("");
@@ -19,7 +17,11 @@ export default function ChoresScreen({ rooms, chores, onComplete, onAdd, onReset
         renderItem={({ item }) => (
           <View style={{ paddingVertical: 8 }}>
             <Text>{item.title} • {item.room} • {item.xp} XP {item.done ? "✓" : ""}</Text>
-            <Button title={item.done ? "Completed" : "Complete"} onPress={() => onComplete(item.id)} disabled={item.done}/>
+            <Button
+              title={item.done ? "Completed" : "Complete"}
+              onPress={() => onComplete(item.id)}
+              disabled={item.done}
+            />
           </View>
         )}
       />
