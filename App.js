@@ -28,7 +28,11 @@ function ChoresScreen({ chores, onComplete }) {
           <Text style={{ fontSize: 16 }}>
             {c.title} ({c.xp} XP) {c.done ? "✓" : ""}
           </Text>
-          <Button title={c.done ? "Completed" : "Complete"} onPress={() => onComplete(c.id)} disabled={c.done} />
+          <Button
+            title={c.done ? "Completed" : "Complete"}
+            onPress={() => onComplete(c.id)}
+            disabled={c.done}
+          />
         </View>
       ))}
     </View>
