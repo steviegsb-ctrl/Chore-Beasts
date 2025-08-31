@@ -1,7 +1,4 @@
-// Must be the very first imports
 import "react-native-gesture-handler";
-import "react-native-url-polyfill/auto";
-
 import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -18,7 +15,7 @@ import PrizesScreen from "./src/screens/PrizesScreen";
 
 const Tab = createBottomTabNavigator();
 
-// sample data if nothing stored yet
+// default data
 const initialRooms = ["Living room", "Kitchen", "Game room"];
 const initialChores = [
   { id: "1", title: "Vacuum", room: "Living room", xp: 10, done: false },
@@ -30,13 +27,12 @@ const initialPrizes = [
 ];
 
 export default function App() {
-  // ----- global app state -----
   const [xp, setXp] = useState(0);
   const [rooms, setRooms] = useState(initialRooms);
   const [chores, setChores] = useState(initialChores);
   const [prizes, setPrizes] = useState(initialPrizes);
 
-  // ----- load once on startup -----
+  // load saved state once
   useEffect(() => {
     (async () => {
       setXp(await load("xp", 0));
@@ -46,7 +42,7 @@ export default function App() {
     })();
   }, []);
 
-  // ----- persist on change -----
+  // persist when state changes
   useEffect(() => { save("xp", xp); }, [xp]);
   useEffect(() => { save("rooms", rooms); }, [rooms]);
   useEffect(() => { save("chores", chores); }, [chores]);
@@ -54,10 +50,7 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider initialMetrics={{
-        frame: { x: 0, y: 0, width: 0, height: 0 },
-        insets: { top: 0, left: 0, right: 0, bottom: 0 },
-      }}>
+      <SafeAreaProvider>
         <NavigationContainer>
           <Tab.Navigator
             screenOptions={({ route }) => ({
