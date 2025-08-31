@@ -1,7 +1,7 @@
 {
   "name": "chore-beasts",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "App.js",
   "private": true,
   "scripts": {
     "start": "expo start",
@@ -11,7 +11,7 @@
     "doctor": "expo doctor"
   },
   "dependencies": {
-    "expo": "~53.0.0",
+    "expo": "^53.0.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.2",
