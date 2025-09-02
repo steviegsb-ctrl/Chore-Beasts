@@ -1,3 +1,5 @@
+// App.js
+import 'react-native-gesture-handler';
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -5,17 +7,16 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { XpProvider } from "./src/state/XpContext";
 import ErrorBoundary from "./src/components/ErrorBoundary";
 
-import HomeScreen from "./HomeScreen";
-import ChoresScreen from "./ChoresScreen";
-import EditRoomsScreen from "./EditRoomsScreen";    // use if this is your Rooms editor
-import BeastsScreen from "./LeaderboardScreen";     // or replace with your actual Beasts screen file
-import PrizesScreen from "./PrizesScreen";
-import TasksScreen from "./TasksScreen";
-import ViewHomeScreen from "./ViewHomeScreen";
-import ChatScreen from "./ChatScreen";
-
-// NEW
-import QuestsScreen from "./QuestsScreen";
+// SCREENS (all live in src/screens)
+import HomeScreen from "./src/screens/HomeScreen";
+import ChoresScreen from "./src/screens/ChoresScreen";
+import EditRoomsScreen from "./src/screens/EditRoomsScreen";
+import BeastsScreen from "./src/screens/LeaderboardScreen";
+import PrizesScreen from "./src/screens/PrizesScreen";
+import TasksScreen from "./src/screens/TasksScreen";
+import ViewHomeScreen from "./src/screens/ViewHomeScreen";
+import ChatScreen from "./src/screens/ChatScreen";
+import QuestsScreen from "./src/screens/QuestsScreen";
 
 const Tab = createBottomTabNavigator();
 
