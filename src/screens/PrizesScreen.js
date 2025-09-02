@@ -1,56 +1,61 @@
-import { useState } from "react";
-import { View, Text, FlatList, TextInput, Button } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Pressable, Alert, FlatList } from "react-native";
+import { getJSON, setJSON } from "./src/storage";
+import { useXp } from "./src/state/XpContext";
 
-export default function PrizesScreen({ xp, prizes, onClaim, onAdd, onReset }) {
-  const [title, setTitle] = useState("");
-  const [cost, setCost] = useState("30");
+const KEY = "cb:prizes";
+
+export default function PrizesScreen(){
+  const [prizes, setPrizes] = useState([]);
+  const { xp, spendXp } = useXp();
+
+  useEffect(() => { (async () => {
+    const initial = await getJSON(KEY, [
+      { id:"p1", title:"Movie Night", cost:50, claimed:false },
+      { id:"p2", title:"Extra Screen Time (30m)", cost:30, claimed:false },
+      { id:"p3", title:"£5 Treat", cost:100, claimed:false }
+    ]);
+    setPrizes(initial);
+  })(); }, []);
+
+  useEffect(() => { setJSON(KEY, prizes); }, [prizes]);
+
+  const claim = (id) => {
+    setPrizes(list => list.map(p => {
+      if (p.id !== id || p.claimed) return p;
+      const ok = spendXp(p.cost);
+      if (!ok) { Alert.alert("Not enough XP", `You need ${p.cost - xp} more XP.`); return p; }
+      return { ...p, claimed:true };
+    }));
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={{ padding:16, borderRadius:12, backgroundColor:"#fff", elevation:2,
+                   marginBottom:12, flexDirection:"row", justifyContent:"space-between", alignItems:"center" }}>
+      <View>
+        <Text style={{ fontSize:16, fontWeight:"600" }}>{item.title}</Text>
+        <Text style={{ opacity:0.6 }}>{item.cost} XP</Text>
+      </View>
+      <Pressable onPress={() => claim(item.id)} disabled={item.claimed}
+        style={{ paddingHorizontal:12, paddingVertical:6, borderRadius:8,
+                 backgroundColor: item.claimed ? "#22c55e" : "#3b82f6" }}>
+        <Text style={{ color:"#fff" }}>{item.claimed ? "CLAIMED" : "CLAIM"}</Text>
+      </Pressable>
+    </View>
+  );
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
-      <Text style={{ fontSize: 22, fontWeight: "700" }}>Prize Board</Text>
-      <Text style={{ marginBottom: 10 }}>XP: {xp}</Text>
-
+    <View style={{ flex:1, padding:16 }}>
+      <Text style={{ fontSize:24, fontWeight:"700", marginBottom:8 }}>Prizes</Text>
       <FlatList
         data={prizes}
-        keyExtractor={(p) => p.id}
-        ListEmptyComponent={<Text>No prizes yet. Add one below.</Text>}
-        renderItem={({ item }) => (
-          <View style={{ paddingVertical: 8 }}>
-            <Text>{item.title} • {item.cost} XP {item.claimed ? "(claimed)" : ""}</Text>
-            <Button title={item.claimed ? "Claimed" : "Claim"} onPress={() => onClaim(item.id)} disabled={item.claimed || xp < item.cost}/>
-          </View>
-        )}
+        keyExtractor={it => it.id}
+        renderItem={renderItem}
+        initialNumToRender={8}
+        maxToRenderPerBatch={8}
+        windowSize={5}
+        removeClippedSubviews
       />
-
-      <View style={{ height: 12 }} />
-      <Text style={{ fontWeight: "600" }}>Add a prize</Text>
-      <TextInput
-        value={title}
-        onChangeText={setTitle}
-        placeholder="Prize title"
-        style={{ borderWidth: 1, padding: 8, borderRadius: 6, marginTop: 6 }}
-      />
-      <TextInput
-        value={cost}
-        onChangeText={setCost}
-        placeholder="Cost (XP)"
-        keyboardType="numeric"
-        style={{ borderWidth: 1, padding: 8, borderRadius: 6, marginTop: 6 }}
-      />
-      <View style={{ height: 6 }} />
-      <Button
-        title="Add prize"
-        onPress={() => {
-          const n = Number(cost) || 0;
-          if (!title.trim() || n <= 0) return;
-          onAdd(title.trim(), n);
-          setTitle("");
-          setCost("30");
-        }}
-      />
-
-      <View style={{ height: 6 }} />
-      <Button title="Reset all claimed" onPress={onReset} />
     </View>
   );
 }
