@@ -1,26 +1,17 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
-import { getJSON, setJSON } from "../storage";
+// src/state/XpContext.js
+import React, { createContext, useContext, useMemo, useState } from "react";
 
-const XpContext = createContext();
-const XP_KEY = "cb:xp_wallet";
+const Ctx = createContext({ xp: 0, addXp: () => {} });
 
-export const XpProvider = ({ children }) => {
+export function XpProvider({ children }) {
   const [xp, setXp] = useState(0);
+  const addXp = (n = 0) => setXp(v => v + (Number.isFinite(n) ? n : 0));
 
-  useEffect(() => { (async () => setXp(await getJSON(XP_KEY, 0)))(); }, []);
-  useEffect(() => { setJSON(XP_KEY, xp); }, [xp]);
+  const value = useMemo(() => ({ xp, addXp }), [xp]);
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+}
 
-  const addXp = useCallback((amount) => {
-    setXp(x => Math.max(0, x + (amount | 0)));
-  }, []);
+export const useXp = () => useContext(Ctx);
 
-  const spendXp = useCallback((amount) => {
-    let ok = false;
-    setXp(x => { ok = x >= amount; return ok ? x - amount : x; });
-    return ok;
-  }, []);
-
-  return <XpContext.Provider value={{ xp, addXp, spendXp }}>{children}</XpContext.Provider>;
-};
-
-export const useXp = () => useContext(XpContext);
+// default export is the context itself (optional, but harmless)
+export default Ctx;
